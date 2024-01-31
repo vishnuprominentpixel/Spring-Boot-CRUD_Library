@@ -3,19 +3,16 @@ package com.springJPA.Library.Controller;
 
 //import com.springJPA.Library.Modal.Book;
 //import com.springJPA.Library.Modal.IssueBook;
-import com.springJPA.Library.Modal.Book;
+import com.springJPA.Library.Config.SpringSecurityConfig;
 import com.springJPA.Library.Modal.UserDetail;
 //import com.springJPA.Library.Service.IssueBookService;
 import com.springJPA.Library.Service.UserServices;
 //import com.springJPA.Library.repo.Bookrepo;
-import com.springJPA.Library.repo.Userrepo;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @AllArgsConstructor
@@ -25,6 +22,8 @@ import java.util.Optional;
 public class UserController {
 
     private UserServices userdetail;
+
+    private SpringSecurityConfig secrityconfig;
     @GetMapping("/getAllUser")
     public ResponseEntity<List<UserDetail>> getAllUser(){
         try {
@@ -64,6 +63,9 @@ public class UserController {
     public ResponseEntity<UserDetail> addUser(@RequestBody UserDetail user) {
         try {
             UserDetail userObj = userdetail.AddUser(user);
+//            secrityconfig.setUsername(user.getUserName());
+//            secrityconfig.setPassword(user.getPassword());
+
             return new ResponseEntity<>(userObj, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
